@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_rpc_show_time" default="compile.module.rpc_show_time">
+  <dirname property="module.rpc_show_time.basedir" file="${ant.file.module_rpc_show_time}"/>
+  
+  <property name="module.jdk.home.rpc_show_time" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.rpc_show_time" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.rpc_show_time" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.rpc_show_time" value="-encoding UTF-8 -source 1.5 -target 1.5 ${compiler.args}"/>
+  
+  <property name="rpc_show_time.output.dir" value="${module.rpc_show_time.basedir}/target/classes"/>
+  <property name="rpc_show_time.testoutput.dir" value="${module.rpc_show_time.basedir}/target/test-classes"/>
+  
+  <path id="rpc_show_time.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="rpc_show_time.module.production.classpath">
+    <path refid="${module.jdk.classpath.rpc_show_time}"/>
+  </path>
+  
+  <path id="rpc_show_time.runtime.production.module.classpath">
+    <pathelement location="${rpc_show_time.output.dir}"/>
+  </path>
+  
+  <path id="rpc_show_time.module.classpath">
+    <path refid="${module.jdk.classpath.rpc_show_time}"/>
+    <pathelement location="${rpc_show_time.output.dir}"/>
+  </path>
+  
+  <path id="rpc_show_time.runtime.module.classpath">
+    <pathelement location="${rpc_show_time.testoutput.dir}"/>
+    <pathelement location="${rpc_show_time.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.rpc_show_time">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.rpc_show_time">
+    <patternset refid="excluded.from.module.rpc_show_time"/>
+  </patternset>
+  
+  <path id="rpc_show_time.module.sourcepath">
+    <dirset dir="${module.rpc_show_time.basedir}">
+      <include name="src/main/java"/>
+      <include name="src/main/resources"/>
+    </dirset>
+  </path>
+  
+  <path id="rpc_show_time.module.test.sourcepath">
+    <dirset dir="${module.rpc_show_time.basedir}">
+      <include name="src/test/java"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.rpc_show_time" depends="compile.module.rpc_show_time.production,compile.module.rpc_show_time.tests" description="Compile module rpc_show_time"/>
+  
+  <target name="compile.module.rpc_show_time.production" depends="register.custom.compilers" description="Compile module rpc_show_time; production classes">
+    <mkdir dir="${rpc_show_time.output.dir}"/>
+    <javac2 destdir="${rpc_show_time.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.rpc_show_time}/javac">
+      <compilerarg line="${compiler.args.rpc_show_time}"/>
+      <bootclasspath refid="rpc_show_time.module.bootclasspath"/>
+      <classpath refid="rpc_show_time.module.production.classpath"/>
+      <src refid="rpc_show_time.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.rpc_show_time"/>
+    </javac2>
+    
+    <copy todir="${rpc_show_time.output.dir}">
+      <fileset dir="${module.rpc_show_time.basedir}/src/main/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.rpc_show_time.basedir}/src/main/resources">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.rpc_show_time.tests" depends="register.custom.compilers,compile.module.rpc_show_time.production" description="compile module rpc_show_time; test classes" unless="skip.tests">
+    <mkdir dir="${rpc_show_time.testoutput.dir}"/>
+    <javac2 destdir="${rpc_show_time.testoutput.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.rpc_show_time}/javac">
+      <compilerarg line="${compiler.args.rpc_show_time}"/>
+      <bootclasspath refid="rpc_show_time.module.bootclasspath"/>
+      <classpath refid="rpc_show_time.module.classpath"/>
+      <src refid="rpc_show_time.module.test.sourcepath"/>
+      <patternset refid="excluded.from.compilation.rpc_show_time"/>
+    </javac2>
+    
+    <copy todir="${rpc_show_time.testoutput.dir}">
+      <fileset dir="${module.rpc_show_time.basedir}/src/test/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="clean.module.rpc_show_time" description="cleanup module">
+    <delete dir="${rpc_show_time.output.dir}"/>
+    <delete dir="${rpc_show_time.testoutput.dir}"/>
+  </target>
+</project>
